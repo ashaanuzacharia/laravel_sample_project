@@ -43,6 +43,8 @@ Route::get('/product/create', [BlogController::class, 'addproduct'])->name('prod
 Route::post('/product/store', [BlogController::class, 'storeproduct'])->name('product.store');
 
 Route::get('/invoices', [BlogController::class, 'invoices'])->name('invoice');
+Route::post('/invoice/store', [BlogController::class, 'storeinvoice'])->name('invoice.store');
+
 Route::get('/product/{item}/price', [BlogController::class, 'getPrice'])->name('getPrice');
 Route::get('/customer/{name}/discount', [BlogController::class, 'getCustomer'])->name('getCustomer');
 

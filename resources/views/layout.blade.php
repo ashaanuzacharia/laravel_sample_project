@@ -76,43 +76,7 @@
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function(){
-      //group add limit
-      var maxGroup = 50;
-      //add more fields group
-      $(".addMore").click(function(){
-        if($('body').find('.fieldGroup').length < maxGroup){
-            var fieldHTML = '<div class="row mt-3 fieldGroup">'
-                  +'<div class="col-12 col-sm-2 mt-3 mt-sm-0">'
-                  +'<select name="item" id="item" placeholder="" class="form-control" required onchange="getPrice()"><option value="">&nbsp;&nbsp;select</option>@foreach($products as $product)<option value="{{ $product -> name }}">&nbsp;&nbsp;{{ $product -> name }}</option>@endforeach</select>&nbsp;&nbsp;&nbsp;'
-                  +'</div>'
-                  +'<div class="col-12 col-sm-3 mt-3 mt-sm-0">'
-                  +'<input id="qty" class="form-control col-md-12 col-xs-12" name="qty[]" value="" required="required" type="number" onchange="total()">&nbsp;&nbsp;&nbsp;'
-                  +'</div>'
-                  +'<div class="col-12 col-sm-3 mt-3 mt-sm-0">'
-                  +'<input id="price" class="form-control col-md-12 col-xs-12" name="price[]" value=""  type="text">&nbsp;&nbsp;&nbsp;'
-                  +'</div>'
-                  +'<div class="col-12 col-sm-2 mt-3 mt-sm-0">'
-                  +'                        <input type="number" step="0.01" id="sub_total" name="sub_total" class="form-control"  value="" readonly>&nbsp;&nbsp;&nbsp;'
-                  +'</div>'
-                  +'<div class="col-12 col-sm-2 mt-3 mt-sm-0">' 
-                  +'<a href="javascript:void(0)" class="btn btn-sm btn-outline-danger remove">Remove</a>'
-                  +'</div>'
-                  +'</div>'
-                  +'</div>';
-            $('body').find('.fieldGroup:last').after(fieldHTML);
-            document.getElementById("tickets").value =$('body'). find('.fieldGroup').length  
-          }else{
-            alert('Maximum '+maxGroup+' groups are allowed.');
-          }
-      });
-
-      //remove fields group
-      $("body").on("click",".remove",function(){ 
-          $(this).parents(".fieldGroup").remove();
-          document.getElementById("tickets").value =$('body'). find('.fieldGroup').length  
-      });
-    });  
+     
 
     function getPrice(){
       var item = document.getElementById("item").value;

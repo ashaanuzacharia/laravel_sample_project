@@ -8,6 +8,8 @@
                 <div class="card-header">{{ __('Add Item') }}</div>
   
                 <div class="card-body">
+                    <form method="post" action="{{route('invoice.store')}}" autocomplete="on" class="form-horizontal" enctype="multipart/form-data" name="add" id="add">
+                    @csrf
                     <div class="form-group">
                         <?php
                         $customers = DB::table('customer')->get();
@@ -61,6 +63,7 @@
                     </div>-->
                     
                     </div>
+                    </form>
                     <!--<div class="row mt-2">
                         <label class="col-md-3 form-label">{{ __('Total') }}</label>
                         <div class="col-md-4">

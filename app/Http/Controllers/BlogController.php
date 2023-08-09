@@ -141,7 +141,7 @@ class BlogController extends Controller
           $customer->name = $data['name'];
           $customer->discount = $data['discount'];
           $customer->save();
-          return redirect()->route('dashboard')->with(Session::flash('status', 'Your Article has been added Successfully!'));
+          //return redirect()->route('dashboard')->with(Session::flash('status', 'Your Article has been added Successfully!'));
       }
    }
    public function addproduct()
@@ -160,7 +160,7 @@ class BlogController extends Controller
           $product->name = $data['name'];
           $product->price = $data['price'];
           $product->save();
-          return redirect()->route('dashboard')->with(Session::flash('status', 'Your Article has been added Successfully!'));
+          //return redirect()->route('dashboard')->with(Session::flash('status', 'Your Article has been added Successfully!'));
       }
    }
    public function invoices()
@@ -183,5 +183,5 @@ class BlogController extends Controller
         return response()->json([
             "discount" => $customer->discount
         ]);
-        }
+    }
 }
