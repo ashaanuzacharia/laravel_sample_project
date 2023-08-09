@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use App\User;
-use App\Activity;
+use App\Blog;
 use Hash;
 use Carbon\Carbon;
 
@@ -67,9 +67,9 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-            'type'=> 'required',
-            'captcha' => 'required|captcha'
+            'password' => 'required|min:6|string|confirmed',
+            //'type'=> 'required',
+            //'captcha' => 'required|captcha'
         ]);
            
         $data = $request->all();
@@ -79,17 +79,17 @@ class AuthController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'type' => $data['type'],
+            //'type' => $data['type'],
          
         ]);
-        $details = [
+        /**$details = [
             'subject' => 'Welcome',
             'greeting' => 'Hello '.$data['name'].'!',
             'body' => 'Welcome to',
-            'thanks' => 'Please activity our system support for any further support.',
+            'thanks' => 'Please blog our system support for any further support.',
             'notification' => 'welcome',
             'url' => url('/'),
-        ];
+        ];**/
         //Mail::to($data['email'])->send(new WelcomeMail($user));
         return redirect("dashboard")->withSuccess('Great! You have Successfully loggedin');
     }
@@ -105,12 +105,11 @@ class AuthController extends Controller
     public function dashboard($id=null)
     {
         if(Auth::check()){
-            $user=User::where(['id'=>auth()->user()->id])->first();
-            $activity=Activity::where(['type'=>$user->type])->get();
-            $tasks=Activity::where(['user_id'=>auth()->user()->id])->get();
+            //$user=User::where(['id'=>auth()->user()->id])->first();
+            $blogs=Blog::where(['user_id'=>auth()->user()->id])->orderBy('id','desc')->paginate(5);
             
-            //echo "<pre>"; print_r($activity); die;
-            return view('dashboard')->with(compact('activity','tasks'));
+            //echo "<pre>"; print_r($blog); die;
+            return view('dashboard')->with(compact('blogs'));
         }
   
         return redirect("login")->withSuccess('Opps! You do not have access');
@@ -141,75 +140,5 @@ class AuthController extends Controller
   
         return Redirect('login');
     }
-    
-    //add 
-    public function addactivity(){
-        $count=Activity::where(['user_id'=>auth()->user()->id])->whereDate('created_at', Carbon::today())->count();
-        //echo "<pre>"; print_r($count); die;
-        if($count>=2)
-        {
-            Session::flash('message', 'You Cannot added more than 2 activities in a day!');
-            return redirect()->route('dashboard');
-
-        }
-        return view('addactivity');
-     }
-    public function store(Request $request){
-        $data = $request->except('_method','_token','submit');
-  
-        $this->validate($request,[
-         'activity' => 'required',
-        
-       ]);
-  
-        if($record = Activity::firstOrCreate($data)){
-           Session::flash('message', 'Added Successfully!');
-           Session::flash('alert-class', 'alert-success');
-           return redirect()->route('dashboard');
-        }else{
-           Session::flash('message', 'Data not saved!');
-           Session::flash('alert-class', 'alert-danger');
-        }
-  
-        return Back();
-     }
-
-     //edit
-   public function edit($id=null){
-    $activity = activity::where(['id' => $id])->first();
-
-     return view('editactivity')->with(compact('activity'));
-  }
-
-  public function update(Request $request,$id){
-    $data = $request->except('_method','_token','submit');
-    
-    $this->validate($request,[
-        'activity' => 'required',
-       
-    ]);
-     
-    $activity = activity::find($id);
-
-     if($activity->update($data)){
-
-        Session::flash('message', 'Update successfully!');
-        Session::flash('alert-class', 'alert-success');
-        return redirect()->route('dashboard');
-     }else{
-        Session::flash('message', 'Data not updated!');
-        Session::flash('alert-class', 'alert-danger');
-     }
-
-     return Back()->withInput();
-  }
-
-  public function destroy($id){
-    Activity::destroy($id);
-
-    Session::flash('message', 'Delete successfully!');
-    Session::flash('alert-class', 'alert-success');
-    return redirect()->route('dashboard');
- }
 
 }

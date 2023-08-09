@@ -41,39 +41,14 @@
                               </div>
                           </div>
                           <div class="form-group row">
-                              <label for="password" class="col-md-4 col-form-label text-md-right">Type</label>
+                              <label for="password_confirmation" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
                               <div class="col-md-6">
-                              <select id="type" name="type" placeholder="" class="form-control" required>
-                                    <option value="" selected>&nbsp;Please Select</option>
-                                    <option value="education">&nbsp;Education</option>
-                                    <option value="recreational">&nbsp;Recreational</option>
-                                    <option value="social">&nbsp;Social</option>
-                                    <option value="diy">&nbsp;Diy</option>
-                                    <option value="charity">&nbsp;Charity</option>
-                                    <option value="cooking">&nbsp;Cooking</option>
-                                    <option value="relaxation">&nbsp;Relaxation</option>
-                                    <option value="music">&nbsp;Music</option>
-                                    <option value="busywork">&nbsp;Busy Work</option>
-                                  </select>
+                                  <input type="password" id="password_confirmation" class="form-control" name="password_confirmation" required>
+                                  @if ($errors->has('password_confirmation'))
+                                      <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
+                                  @endif
                               </div>
                           </div>
-                          <div class="form-group row">
-                          <label for="password" class="col-md-4 col-form-label text-md-right"></label>
-                          <div class="col-md-6">
-                                <div class="captcha">
-                                    <span>{!! captcha_img() !!}</span>
-                                    <button type="button" class="btn btn-danger" class="reload" id="reload">
-                                        &#x21bb;
-                                    </button>
-                                </div>
-                           </div>
-                           </div>
-                           <div class="form-group row">
-                           <label for="password" class="col-md-4 col-form-label text-md-right"></label>
-                           <div class="col-md-6">
-                                <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
-                            </div>
-                            </div>
                           <div class="form-group row">
                               <div class="col-md-6 offset-md-4">
                                   <div class="checkbox">

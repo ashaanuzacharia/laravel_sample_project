@@ -18,28 +18,45 @@
                         {{ Session::get('message') }}
                     </div>
                     @endif
-                    Here is the list of Activities
-                    <br><br>
-                    @foreach ($activity as $activity_all) 
+                    <div class="row">
+                        <div class="col-lg-12 margin-tb">
+                            <div class="pull-left">
+                                <h2>News & Articles</h2>
+                            </div>
+                            <div class="pull-right mb-2">
+                                <a class="btn btn-success" href="{{ route('blog.create') }}"> Create Blog</a>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Blog Title</th>
+                                <th>Blog SubTitle</th>
+                                <th>Blog Description</th>
+                                <th width="280px">Action</th>
+                            </tr>
+                        </thead>
                         <tbody>
-                        <tr>
-                            <td>{{ $activity_all->activity }}</td><br>
-                        </tr>
+                            @foreach ($blogs as $blog)
+                                <tr>
+                                    <td>{{ $blog->id }}</td>
+                                    <td>{{ $blog->title }}</td>
+                                    <td>{{ $blog->sub_title }}</td>
+                                    <td>{{ $blog->desc }}</td>
+                                    <td>
+                                        <a class="btn btn-success" href="{{ route('blog.view',$blog->id) }}">View</a>
+
+                                        <a class="btn btn-primary" href="{{ route('blog.edit',$blog->id) }}">Edit</a>
+                                        <a class="btn btn-danger" href="{{ route('blog.delete',$blog->id) }}">Delete</a>
+
+                                    </td>
+                                </tr>
+                                @endforeach
                         </tbody>
-                    @endforeach
-                    <hr style="width:50%;text-align:left;margin-left:0">
-                    <a  href="{{route('activity.create')}}">Add More Activity</a>
-                    <hr style="width:50%;text-align:left;margin-left:0">
-                    @foreach($tasks as $task)
-                        <h6>{{ $task->activity}}</h6>
-                        <p>
-                            <a href="{{ route('activity.edit',[$task->id]) }}" class="btn btn-primary">Edit Activity</a>
-                            @if((auth()->user()->role =='admin'))
-                            <a  onclick="return confirm('Are you sure?')" id="del" href="{{ route('activity.delete',$task->id) }}" class="btn btn-danger">Delete Activity</a>
-                            @endif
-                        </p>
-                        <hr>
-                    @endforeach
+                    </table>
+                    {!! $blogs->links() !!}
                 </div>
             </div>
         </div>

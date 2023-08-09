@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,12 +26,25 @@ Route::get('/reload-captcha', [AuthController::class, 'reloadCaptcha']);
 Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard'); 
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/activity/create', [AuthController::class, 'addactivity'])->name('activity.create');
-Route::post('/activity/store', [AuthController::class, 'store'])->name('activity.store');
+Route::get('/blog/create', [BlogController::class, 'addblog'])->name('blog.create');
+Route::post('/blog/store', [BlogController::class, 'store'])->name('blog.store');
+Route::get('/blog/view/{id}', [BlogController::class, 'view'])->name('blog.view');
 
-Route::get('/activity/store/{id}', [AuthController::class, 'edit'])->name('activity.edit');
-Route::post('/activity/update/{id}', [AuthController::class, 'update'])->name('activity.update');
+Route::get('/blog/store/{id}', [BlogController::class, 'edit'])->name('blog.edit');
+Route::post('/blog/update/{id}', [BlogController::class, 'update'])->name('blog.update');
 
-Route::get('/activity/delete/{id}', [AuthController::class,'destroy'])->name('activity.delete');
+Route::get('/blog/delete/{id}', [BlogController::class,'destroy'])->name('blog.delete');
+Route::get('/blog/image-delete/{id}', [BlogController::class,'destroyimage'])->name('blog.imagedelete');
+
+Route::get('/customer/create', [BlogController::class, 'addcustomer'])->name('customer.create');
+Route::post('/customer/store', [BlogController::class, 'storecustomer'])->name('customer.store');
+
+Route::get('/product/create', [BlogController::class, 'addproduct'])->name('product.create');
+Route::post('/product/store', [BlogController::class, 'storeproduct'])->name('product.store');
+
+Route::get('/invoices', [BlogController::class, 'invoices'])->name('invoice');
+Route::get('/product/{item}/price', [BlogController::class, 'getPrice'])->name('getPrice');
+Route::get('/customer/{name}/discount', [BlogController::class, 'getCustomer'])->name('getCustomer');
+
 
 
